@@ -12,6 +12,8 @@ run docker-compose up --build --force-recreate
 ![img_2.png](img_2.png)
 5. Execute cmd "heroku create"
 ![img.png](img.png)
-6. Execute cmd "git push --set-upstream heroku master"
-![img_3.png](img_3.png)
-7. Execute cmd "git push --set-upstream heroku open"
+7. Execute cmd 
+   1. `git add . && git commit -m "Added system.properties with target jvm version"` to commit your code
+   2. `git push --set-upstream master` to deploy your app
+8. Execute cmd `heroku open` to open you app![img_5.png](img_5.png)
+9. Execute cmd `heroku log --tail` to view log![img_4.png](img_4.png)
