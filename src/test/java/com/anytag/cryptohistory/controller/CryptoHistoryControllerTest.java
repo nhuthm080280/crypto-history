@@ -5,14 +5,8 @@ import com.anytag.cryptohistory.dto.CryptoHistoryResponse;
 import com.anytag.cryptohistory.dto.CryptoHistorySearchRequest;
 import com.anytag.cryptohistory.entity.CryptoHistory;
 import com.anytag.cryptohistory.repository.CryptoHistoryRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.jayway.jsonpath.TypeRef;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,18 +48,9 @@ public class CryptoHistoryControllerTest {
     private String baseUrl = "/api";
     private String createCryptoHistoryUrl = baseUrl + "/crypto-history";
     private String searchCryptoHistoryUrl = baseUrl + "/search-crypto-history";
-    private Gson gson;
-
-    void setupMockMvc() {
-//        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
-        gson = new GsonBuilder().registerTypeAdapter(Instant.class, (JsonDeserializer<Instant>) (json, type, jsonDeserializationContext) ->
-            Instant.parse(json.getAsJsonPrimitive().getAsString())).create();
-    }
 
     @BeforeEach
     void setup() {
-        setupMockMvc();
         cryptoHistoryRepository.deleteAll();
     }
 
