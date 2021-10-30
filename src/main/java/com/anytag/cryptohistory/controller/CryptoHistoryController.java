@@ -54,7 +54,7 @@ public class CryptoHistoryController {
     public ResponseEntity<CryptoHistoryResponse> createCryptoHistory(@RequestBody CryptoHistoryRequest request) {
         CryptoHistory cryptoHistory = cryptoHistoryService.createCryptoHistoryPrice(request);
         CryptoHistoryResponse response = new CryptoHistoryResponse(
-            cryptoHistory.getAmount(), cryptoHistory.getDatetime()
+            cryptoHistory.getAmount().setScale(6), cryptoHistory.getDatetime()
         );
         logger.info("Stored new crypto history successfully.");
         return new ResponseEntity<>(response, HttpStatus.OK);

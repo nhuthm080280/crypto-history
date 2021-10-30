@@ -16,15 +16,13 @@ public class CryptoHistoryService {
 
     public List<CryptoHistory> filterCryptoHistoryByDatetime(String startTime, String endTime) {
         Instant startTimeInstant = Instant.parse(startTime);
-        System.out.println("startTime: " + startTime);
         Instant endTimeInstant = Instant.parse(endTime);
-        System.out.println("endTime: " + startTime);
         return cryptoHistoryRepository.findAllByDatetimeBetween(startTimeInstant, endTimeInstant);
     }
 
     public CryptoHistory createCryptoHistoryPrice(CryptoHistoryRequest request) {
         CryptoHistory cryptoHistory = new CryptoHistory();
-        cryptoHistory.setAmount(request.getAmount());
+        cryptoHistory.setAmount(request.getAmount().setScale(6));
         cryptoHistory.setDatetime(Instant.parse(request.getDateTime()));
         return cryptoHistoryRepository.save(cryptoHistory);
     }
