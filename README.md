@@ -5,11 +5,11 @@
 #Deploy to heroku
 1. https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
 2. Download heroku cli
-3. Execute cmd "heroku login"
+3. Execute cmd `heroku login`
    1. ![img_1.png](img_1.png)
 4. Go to project folder. Example: cd crypto-history
    1. ![img_2.png](img_2.png)
-5. Execute cmd "heroku create"
+5. Execute cmd `heroku create`
    1. ![img.png](img.png)
 6. Execute cmd 
    1. `git add . && git commit -m "Added system.properties with target jvm version"` to commit your code
