@@ -29,8 +29,6 @@ jobs:
           java-version: 17
       - name: Build with Gradle
         run: ./gradlew clean build
-      - name: debug
-        run: echo $DOCKER_USERNAME && echo $REPO
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -45,4 +43,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/crypto-history:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
