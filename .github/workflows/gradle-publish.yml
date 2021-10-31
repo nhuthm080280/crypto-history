@@ -15,8 +15,6 @@ jobs:
           java-version: 17
       - name: Test with Gradle
         run: ./gradlew test
-      - name: Build with Gradle
-        run: ./gradlew build
   docker:
     name: Publish Docker Image
     runs-on: ubuntu-latest
@@ -25,6 +23,8 @@ jobs:
       REPO: ${{ secrets.DOCKER_REPO }}
     steps:
       - uses: actions/checkout@v1
+      - name: Build with Gradle
+        run: ./gradlew clean build
       - name: Docker Hub Sign-in
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Building Docker Image
