@@ -19,8 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -35,9 +33,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CryptoHistoryControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -79,6 +74,21 @@ public class CryptoHistoryControllerTest {
     }
 
     @Test
+    public void createCrypoHistoryFailed() throws Exception {
+        // Given
+        String testDatetime = "2021-10-05T15:00:00+00:00";
+        BigDecimal testAmount = BigDecimal.valueOf(-1);
+        CryptoHistoryRequest request = new CryptoHistoryRequest(testAmount, testDatetime);
+
+        // When and Then
+        mockMvc.perform(
+            MockMvcRequestBuilders.post(createCryptoHistoryUrl)
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
     public void filterCrypoHistorySuccess() throws Exception {
         // Given
         List<CryptoHistory> cryptoHistories = new ArrayList<>();
@@ -109,7 +119,8 @@ public class CryptoHistoryControllerTest {
 
         // Then
         List<CryptoHistoryResponse> cryptoHistoryResponses = objectMapper.readValue(
-            result.getResponse().getContentAsString(), new TypeReference<List<CryptoHistoryResponse>>(){}
+            result.getResponse().getContentAsString(), new TypeReference<List<CryptoHistoryResponse>>() {
+            }
         );
         assertThat(cryptoHistoryResponses.get(0).getAmount().equals(BigDecimal.valueOf(1000)));
         assertThat(cryptoHistoryResponses.get(0).getDateTime().equals("2019-10-05T13:00:00+00:00"));
