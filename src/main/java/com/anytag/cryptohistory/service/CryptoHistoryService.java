@@ -15,7 +15,7 @@ public class CryptoHistoryService {
     @Autowired
     private CryptoHistoryRepository cryptoHistoryRepository;
 
-    public List<CryptoHistory> filterCryptoHistoryByDatetime(String startTime, String endTime) {
+    public List<CryptoHistory> filterCryptoHistoryByDatetime(String startTime, String endTime) throws DateTimeParseException {
         Instant startTimeInstant = Instant.parse(startTime);
         Instant endTimeInstant = Instant.parse(endTime);
         return cryptoHistoryRepository.findAllByDatetimeBetween(startTimeInstant, endTimeInstant);
