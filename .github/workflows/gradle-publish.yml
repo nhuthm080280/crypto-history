@@ -34,4 +34,4 @@ jobs:
       - name: Building Docker Image
         run: docker build -t $REPO:latest -t $REPO:${GITHUB_RUN_ID} .
       - name: Publish Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/$REPO:${GITHUB_RUN_ID}
+        run: docker push $REPO
