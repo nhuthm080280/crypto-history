@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -14,17 +15,15 @@ public class CryptoHistoryService {
     @Autowired
     private CryptoHistoryRepository cryptoHistoryRepository;
 
-    public List<CryptoHistory> filterCryptoHistoryByDatetime(String startTime, String endTime) {
+    public List<CryptoHistory> filterCryptoHistoryByDatetime(String startTime, String endTime) throws DateTimeParseException {
         Instant startTimeInstant = Instant.parse(startTime);
-        System.out.println("startTime: " + startTime);
         Instant endTimeInstant = Instant.parse(endTime);
-        System.out.println("endTime: " + startTime);
         return cryptoHistoryRepository.findAllByDatetimeBetween(startTimeInstant, endTimeInstant);
     }
 
-    public CryptoHistory createCryptoHistoryPrice(CryptoHistoryRequest request) {
+    public CryptoHistory createCryptoHistoryPrice(CryptoHistoryRequest request) throws DateTimeParseException {
         CryptoHistory cryptoHistory = new CryptoHistory();
-        cryptoHistory.setAmount(request.getAmount());
+        cryptoHistory.setAmount(request.getAmount().setScale(6));
         cryptoHistory.setDatetime(Instant.parse(request.getDateTime()));
         return cryptoHistoryRepository.save(cryptoHistory);
     }

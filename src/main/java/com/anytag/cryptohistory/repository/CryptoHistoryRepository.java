@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface CryptoHistoryRepository extends JpaRepository<CryptoHistory, Long> {
     List<CryptoHistory> findAllByDatetimeBetween(Instant startTime, Instant endTime);
+
     CryptoHistory findByAmountAndDatetime(BigDecimal amount, Instant dateTime);
 }
