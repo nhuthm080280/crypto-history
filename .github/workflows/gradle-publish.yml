@@ -2,7 +2,7 @@ name: Master Branch
 on:
   push:
     branches:
-      - 'master'
+      - 'feature/test_github_action'
 jobs:
   test:
     name: Unit-Test
